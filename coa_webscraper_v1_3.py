@@ -311,61 +311,7 @@ class CoAWebscraper:
         
         
         
-# --- FULL SCRAPING FUNCTIONS ---
-
-# DEFUNCT, use full_scrap_store below.  
-def full_scrap(webscraper, address):
-    """
-    testing a full loop of the CoA results table for an address.
-    Defines a stoping condition for looping when the final page is reached.
-    """
-    # Open the driver
-    webscraper.open_webdriver()
-    time.sleep(0.1)
-    
-    # Search an address
-    webscraper.search_address(address)
-    time.sleep(0.1)
-    
-    i = 0
-    res_count = 0
-    # Loop through pages
-    while True:
-        i= i+1 
-        try:
-            # init the stop condition: count elements on a page.
-            res = webscraper.count_results_on_page()
-            res_count = res_count + res
-            
-            # Loop through the pages, skipping pages that hang.
-            webscraper.open_one_page()
-            time.sleep(0.5)
-            
-            # Try printing the text data for each page, suppress long print.
-            ta, td = webscraper.return_one_page_soup(long=False)
-            
-            print("some results from this page:")
-            print(ta)
-            
-            # Stop check before proceeding to next page.
-            print('Page: {}, Results: {} '.format(i, res))
-            if res < 10:
-                print('[Stop Condition] reached final page.')
-                break
-                
-            webscraper.next_page()
-            time.sleep(0.5)
-                      
-        except:
-            print('[Error] page {} hanging, skipped.'.format(i))
-            webscraper.next_page()
- 
-    print('[Info] Total Results: {} '.format(res_count))
-    print('[Info] complete.')
-    webscraper.close_webdriver(0.1)
-    
-
-    
+# --- FULL SCRAPING FUNCTIONS ---    
 def full_scrap_store(webscraper, address):
     """
     testing a full loop of the CoA results table for an address.
